@@ -35,7 +35,7 @@ namespace code_tests
         public void MoveOneUnit()
         {
             Assert.IsTrue(oRobotSimulator.Place("0,0,NORTH"));
-            Assert.IsTrue(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Rotate());
             Assert.AreEqual(oRobotSimulator.Report(), "0,1,NORTH");
         }
 
