@@ -2,6 +2,9 @@
 
 namespace rea_robot_code
 {
+    /// <summary>
+    /// Simulates a toy robot's movement on a 5x5 dimensional tabletop
+    /// </summary>
     public class RobotSimulator
     {
         private int x;
@@ -16,6 +19,34 @@ namespace rea_robot_code
         {
             // store all geo directions in an array for easy retrieval
             arrDirections = new string[] { "north", "east", "south", "west" };
+        }
+
+        /// <summary>
+        /// Places and moves the toy robot on the tabletop as per the supplied command
+        /// </summary>
+        /// <param name="argCommand">Command entered on this interface (e.g. PLACE 1,2,SOUTH)</param>
+        /// <returns>True/False indicating success/failure of robot's movement</returns>
+        public bool MoveRobot(string argCommand)
+        {
+            // seggregate movememnt command from position parameters
+            var arrCommand = argCommand.Split(' ');
+            var movement = arrCommand[0];
+            var position = arrCommand.Length == 2 ? arrCommand[1] : string.Empty;
+
+            // move or rotate the robot based on the controller's command 
+            switch (movement.ToLowerInvariant())
+            {
+                case "place":
+                    return Place(position);
+                case "left":
+                    return Left();
+                case "right":
+                    return Right();
+                case "move":
+                    return Move();
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -83,6 +114,42 @@ namespace rea_robot_code
             direction = arrDirections[newArrayIndex];
 
             return true;
+        }
+
+        /// <summary>
+        /// Rotates the robot in either north/east/south/west direction
+        /// </summary>
+        /// <returns>True/False indicating success/failure of robot's rotation</returns>
+        public bool Move()
+        {
+            var hasRotated = true;
+
+            // move robot one unit in the direction it's currently pointing to
+            // but only if it's not currently positioned in the bordering units
+            switch (direction)
+            {
+                case "north":
+                    hasRotated = y == 4 ? false : true;
+                    y = y == 4 ? 4 : y + 1;
+                    break;
+                case "south":
+                    hasRotated = y == 0 ? false : true;
+                    y = y == 0 ? 0 : y - 1;
+                    break;
+                case "east":
+                    hasRotated = x == 4 ? false : true;
+                    x = x == 4 ? 4 : x + 1;
+                    break;
+                case "west":
+                    hasRotated = x == 0 ? false : true;
+                    x = x == 0 ? 0 : x - 1;
+                    break;
+                default:
+                    hasRotated = false;
+                    break;
+            }
+
+            return hasRotated;
         }
 
         /// <summary>
