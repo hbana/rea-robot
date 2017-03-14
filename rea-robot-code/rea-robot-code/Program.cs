@@ -21,7 +21,7 @@ namespace rea_robot_code
                     break;
 
                 if (!oRobotSimulator.MoveRobot(command))
-                    Console.WriteLine("...Robot can't be moved further in this direction to prevent it from falling to destruction");
+                    Console.WriteLine("...Invalid command");
             }
 
             Console.WriteLine(oRobotSimulator.Report());

@@ -73,7 +73,7 @@ namespace rea_robot_code
             y = y >= 0 && y < 5 ? y : -1;
             direction = x == -1 && y == -1 ? string.Empty : direction;
 
-            return true;
+            return string.IsNullOrEmpty(direction) ? false : true;
         }
 
         /// <summary>
@@ -122,34 +122,34 @@ namespace rea_robot_code
         /// <returns>True/False indicating success/failure of robot's rotation</returns>
         public bool Move()
         {
-            var hasRotated = true;
+            var hasMoved = true;
 
             // move robot one unit in the direction it's currently pointing to
             // but only if it's not currently positioned in the bordering units
             switch (direction)
             {
                 case "north":
-                    hasRotated = y == 4 ? false : true;
+                    hasMoved = y == 4 ? false : true;
                     y = y == 4 ? 4 : y + 1;
                     break;
                 case "south":
-                    hasRotated = y == 0 ? false : true;
+                    hasMoved = y == 0 ? false : true;
                     y = y == 0 ? 0 : y - 1;
                     break;
                 case "east":
-                    hasRotated = x == 4 ? false : true;
+                    hasMoved = x == 4 ? false : true;
                     x = x == 4 ? 4 : x + 1;
                     break;
                 case "west":
-                    hasRotated = x == 0 ? false : true;
+                    hasMoved = x == 0 ? false : true;
                     x = x == 0 ? 0 : x - 1;
                     break;
                 default:
-                    hasRotated = false;
+                    hasMoved = false;
                     break;
             }
 
-            return hasRotated;
+            return hasMoved;
         }
 
         /// <summary>
