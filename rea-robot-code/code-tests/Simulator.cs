@@ -49,5 +49,36 @@ namespace code_tests
             Assert.IsTrue(oRobotSimulator.MoveRobot("MOVE"));
             Assert.AreEqual(oRobotSimulator.Report(), "3,3,NORTH");
         }
+
+        [TestMethod]
+        public void CheckRobotAbsent()
+        {
+            Assert.IsFalse(oRobotSimulator.Move());
+            Assert.IsFalse(oRobotSimulator.Right());
+            Assert.IsFalse(oRobotSimulator.Left());
+            Assert.AreEqual(oRobotSimulator.Report(), "No robot placed on the tabletop");
+        }
+
+        [TestMethod]
+        public void PreventFromFalling()
+        {
+            Assert.IsFalse(oRobotSimulator.Place("6,6,NORTH"));
+            Assert.IsTrue(oRobotSimulator.Place("0,0,NORTH"));
+            Assert.IsTrue(oRobotSimulator.Left());
+            Assert.IsFalse(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Right());
+            Assert.IsTrue(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Left());
+            Assert.IsFalse(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Place("4,4,SOUTH"));
+            Assert.IsTrue(oRobotSimulator.Left());
+            Assert.IsFalse(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Place("0,4,WEST"));
+            Assert.IsTrue(oRobotSimulator.Right());
+            Assert.IsFalse(oRobotSimulator.Move());
+            Assert.IsTrue(oRobotSimulator.Place("4,0,EAST"));
+            Assert.IsTrue(oRobotSimulator.Right());
+            Assert.IsFalse(oRobotSimulator.Move());
+        }
     }
 }
