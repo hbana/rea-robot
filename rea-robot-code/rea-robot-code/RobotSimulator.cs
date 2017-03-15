@@ -117,16 +117,16 @@ namespace rea_robot_code
         }
 
         /// <summary>
-        /// Rotates the robot in either north/east/south/west direction
+        /// Moves the robot in either north/east/south/west direction
         /// </summary>
-        /// <returns>True/False indicating success/failure of robot's rotation</returns>
+        /// <returns>True/False indicating success/failure of robot's movement</returns>
         public bool Move()
         {
             var hasMoved = true;
 
-            // move robot one unit in the direction it's currently pointing to
-            // but only if it's not currently positioned in the bordering units
-            switch (direction)
+			// move robot one unit in the direction it's currently facing, but prevent
+			// it from moving outwards if positioned in one of the bordering units
+			switch (direction)
             {
                 case "north":
                     hasMoved = y == 4 ? false : true;
